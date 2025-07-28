@@ -1,31 +1,17 @@
-using System;
 using System.Collections.Generic;
 using System.IO;
-using Excel = Microsoft.Office.Interop.Excel;
 
-namespace NX_Teamcenter_Export
+public class CsvExporter
 {
-    public static class ExcelExporter
+    public static void Export(string path, List<(string ComponentName, string BodyName, double Volume, double Area, double Mass, string ImagePath)> data)
     {
-        public static string ExportResultsToExcel(List<string> results)
+        using (StreamWriter writer = new StreamWriter(path))
         {
-            string path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "BodyExport.xlsx");
-
-            var excelApp = new Excel.Application();
-            excelApp.Visible = false;
-            var workbook = excelApp.Workbooks.Add();
-            Excel.Worksheet worksheet = workbook.Sheets[1];
-
-            int row = 1;
-            foreach (var line in results)
+            writer.WriteLine("Component,Body,Volume,Area,Mass,ImagePath");
+            foreach (var item in data)
             {
-                worksheet.Cells[row++, 1] = line;
+                writer.WriteLine($"{item.ComponentName},{item.BodyName},{item.Volume},{item.Area},{item.Mass},{item.ImagePath}");
             }
-
-            workbook.SaveAs(path);
-            workbook.Close();
-            excelApp.Quit();
-            return path;
         }
     }
 }

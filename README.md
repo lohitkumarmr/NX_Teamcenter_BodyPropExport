@@ -1,10 +1,10 @@
-# NX_Teamcenter_BodyPropExport
+# NX_BodyPropExport
 Exports all Bodies Properties in an assembly to CSV
 
 
-# NX_Teamcenter_BodyPropExport
+# NX_BodyPropExport
 
-A modular NX Open C# journal that works with Teamcenter or local assemblies, 
+A modular NX Open C# journal that works with local assemblies, 
 exports body volume/area/mass data to Excel, and can capture screenshots.
 
 ## Project files

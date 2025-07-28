@@ -9,11 +9,13 @@ exports body volume/area/mass data to Excel, and can capture screenshots.
 
 ## Project files
 
-- `Program.cs` – Main logic, orchestrates export workflow  
-- `RootComponentExplorer.cs` – Recursive traversal of components  
-- `MyMeasureBodies.cs` – Measures body properties (volume/area/mass)  
-- `ScreenshotHelper.cs` – Captures NX window screenshot  
-- `ExcelExporter.cs` – Writes data to Excel  
+- `ComponentTraverser.cs` – Recursively traverses all components (root & children).  
+- `BodyPropertyExporter.cs` – Measures volume, area, and mass using MeasureManager.  
+- `ScreenshotGenerator.cs` – Captures and crops the NX screenshot based on component geometry bounds.  
+- `CsvExporter.cs` – Exports data (including image filename) to CSV.  
+- `MainProgram.cs` – Coordinates all the steps: 1) Traverse all components. 2) Measure body properties. 3) Take cropped screenshots. 4) Export to CSV
+
+
 
 ## Usage
 

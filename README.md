@@ -10,8 +10,8 @@ exports body volume/area/mass data to Excel, and can capture screenshots.
 ## Project files
 
 - `Program.cs` – Main logic, orchestrates export workflow  
-- `ComponentWalker.cs` – Recursive traversal of components  
-- `BodyMeasurer.cs` – Measures body properties (volume/area/mass)  
+- `RootComponentExplorer.cs` – Recursive traversal of components  
+- `MyMeasureBodies.cs` – Measures body properties (volume/area/mass)  
 - `ScreenshotHelper.cs` – Captures NX window screenshot  
 - `ExcelExporter.cs` – Writes data to Excel  
 

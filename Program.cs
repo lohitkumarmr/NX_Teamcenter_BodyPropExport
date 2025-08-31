@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 
 
-namespace NXOpenTest
+namespace BodyPropToCSV
 {
-    public class NXOpenTest
+    public class BodyPropToCSV
     {
         public static void Main()
         {

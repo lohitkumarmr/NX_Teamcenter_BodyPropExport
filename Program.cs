@@ -1,38 +1,43 @@
-using NXOpen;
 using System;
 using System.Collections.Generic;
-using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using NXOpen;
+using NXOpenUI;
+using System.Windows.Forms;
 
-public class Program
+
+
+namespace NXOpenTest
 {
-    public static void Main(string[] args)
+    public class NXOpenTest
     {
-        Session session = Session.GetSession();
-        Part workPart = session.Parts.Work;
-        string imageFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "NX_Screenshots");
-        string csvPath = Path.Combine(imageFolder, "BodyData.csv");
-
-        Directory.CreateDirectory(imageFolder);
-        List<(string ComponentName, string BodyName, double Volume, double Area, double Mass, string ImagePath)> dataList = new();
-
-        Component root = workPart.ComponentAssembly.RootComponent;
-        List<Component> allComponents = ComponentWalker.GetAllComponents(root);
-
-        foreach (Component comp in allComponents)
+        public static void Main()
         {
-            List<Body> bodies = BodyPropertyExtractor.GetBodies(comp);
-            foreach (Body body in bodies)
-            {
-                double vol = body.GetVolume();
-                double area = body.GetArea();
-                double mass = body.GetMassProperties().Mass;
-                string screenshotPath = ScreenshotCropper.CaptureAndCrop(session, comp, imageFolder);
-                dataList.Add((comp.DisplayName, body.Name, vol, area, mass, screenshotPath));
-            }
-        }
+            NXOpen.Session theSession = NXOpen.Session.GetSession();
+            NXOpen.Part workPart = theSession.Parts.Work;
+            NXOpen.UI theUI = NXOpen.UI.GetUI();
+            NXOpen.ListingWindow lw = theSession.ListingWindow;
+            lw.Open();
+            
+            String partName = workPart.Name;
+            string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+            string outputFolder = $"{desktopPath}\\{partName}.csv";
+            lw.WriteLine(outputFolder);
+            string outputCsv = outputFolder;
 
-        CsvExporter.Export(csvPath, dataList);
-        session.ListingWindow.Open();
-        session.ListingWindow.WriteLine("Export complete: " + csvPath);
+
+            AssemblyHelper.ProcessAllDescendants(theSession, outputCsv);
+        }
+            
+
+            
+
+        public static int GetUnloadOption(string dummy) { return (int)NXOpen.Session.LibraryUnloadOption.Immediately; }
     }
+
 }
+
+    
+
